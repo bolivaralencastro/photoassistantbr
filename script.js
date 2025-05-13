@@ -589,7 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const modalId = btn.dataset.modalId;
             document.getElementById(modalId).style.display = "none";
         }
-    });
+    
     window.onclick = (event) => {
         if (event.target.classList.contains('modal')) {
             event.target.style.display = "none";
