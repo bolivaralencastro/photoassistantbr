@@ -37,7 +37,6 @@ let equipmentData = [
     { group: "Sony", id:"cage_camera_sony", name: "Cage/Gaiola para camera", type: "Acessório de Câmera", brand: "Genérico", price: 25, image: "https://placehold.co/150x100/181818/b3b3b3?text=Cage", description: "Estrutura de proteção e montagem.", quantidade_total: 5, quantidade_disponivel: 3 },
     { group: "Sony", id:"bateria_np_fz100", name: "Bateria NP-FZ100", type: "Bateria", brand: "Sony", price: 35, image: "https://placehold.co/150x100/181818/b3b3b3?text=NP-FZ100", description: "Bateria para câmeras Sony Alpha.", quantidade_total: 8, quantidade_disponivel: 0 },
     { group: "Sony", id:"powerbank_30000mah_60w_sony", name: "Power Bank 30000Mah 60W", type: "Power Bank", brand: "Genérico", price: 40, image: "https://placehold.co/150x100/181818/b3b3b3?text=PB+60W", description: "Carregador portátil de alta capacidade.", quantidade_total: 6, quantidade_disponivel: 5 },
-    // ... (RESTO DOS SEUS DADOS DE EQUIPAMENTOS)
     // FLASH
     { group: "Flash", id:"godox_ad600pro", name: "Godox AD600pro (1 bateria) (600ws)", type: "Flash de Estúdio", brand: "Godox", price: 200, image: "https://placehold.co/150x100/181818/b3b3b3?text=AD600", description: "Flash de estúdio potente e portátil.", quantidade_total: 4, quantidade_disponivel: 1 },
     { group: "Flash", id:"radio_flash_godox_xpro", name: "Radio Flash godox Xpro", type: "Rádio Flash", brand: "Godox", price: 25, image: "https://placehold.co/150x100/181818/b3b3b3?text=Xpro", description: "Transmissor de rádio para flashes Godox.", quantidade_total: 5, quantidade_disponivel: 5 },
@@ -134,10 +133,9 @@ let equipmentData = [
 ].map(item => ({ ...item, brand: item.brand || inferBrandFromName(item.name) }));
 
 let budgetItems = []; 
-let registeredUsers = []; // Para simular usuários cadastrados
-let currentUser = null; // Para simular usuário logado
+let registeredUsers = []; 
+let currentUser = null; 
 
-// Seletores DOM (mantidos, mas verificados)
 const equipmentListSectionsEl = document.getElementById('equipment-list-sections');
 const globalSearchBarEl = document.getElementById('global-search-bar'); 
 const dateStartEl = document.getElementById('date-start');
@@ -155,16 +153,12 @@ const budgetTotalPriceEl = document.getElementById('budget-total-price');
 const sendWhatsAppBottomBtn = document.getElementById('send-whatsapp-bottom-btn');
 const emptyBudgetBarMessageEl = document.getElementById('empty-budget-bar-message');
 
-// Modais e seus controles
 const signupModal = document.getElementById('signup-modal');
 const loginModal = document.getElementById('login-modal');
-const generalInfoModal = document.getElementById('general-info-modal'); // Se você quiser usá-lo
-
 const closeModalBtns = document.querySelectorAll('.close-modal-btn');
 const signupActionBtn = document.getElementById('signup-action-btn');
 const loginActionBtn = document.getElementById('login-action-btn');
 const userGreetingEl = document.getElementById('user-greeting');
-
 const signupForm = document.getElementById('signup-form'); 
 const loginForm = document.getElementById('login-form');
 
@@ -235,7 +229,7 @@ function setupHorizontalScroll(sectionElement) {
 
     prevArrow.addEventListener('click', () => {
         cardsContainer.scrollBy({ left: -cardWidth * 2, behavior: 'smooth' }); 
-        setTimeout(updateArrowStates, 350); // Atraso para scroll-behavior: smooth
+        setTimeout(updateArrowStates, 350);
     });
 
     nextArrow.addEventListener('click', () => {
@@ -247,9 +241,7 @@ function setupHorizontalScroll(sectionElement) {
         requestAnimationFrame(updateArrowStates); 
     });
     window.addEventListener('resize', updateArrowStates); 
-    
-    // Chamar uma vez para o estado inicial, especialmente se o conteúdo já preenche
-    setTimeout(updateArrowStates, 50); // Pequeno delay para garantir que o layout está pronto
+    setTimeout(updateArrowStates, 50); 
 }
 
 function renderEquipmentSections(items) {
@@ -487,20 +479,22 @@ function handleSignupFormSubmit(event) {
     const cep = document.getElementById('signup-cep').value;
     const city = document.getElementById('signup-city').value;
 
+    if (!name || !cpf || !email || !phone || !password || !address || !cep || !city) {
+        alert("Por favor, preencha todos os campos obrigatórios do cadastro.");
+        return;
+    }
     if (password !== confirmPassword) {
         alert("As senhas não coincidem!");
         return;
     }
     if (registeredUsers.find(user => user.email === email || user.cpf === cpf)) {
-        alert("Email ou CPF já cadastrado!");
+        alert("Email ou CPF já cadastrado! Tente fazer login ou use outros dados.");
         return;
     }
 
-    // Simula o armazenamento do usuário
     const newUser = { name, cpf, email, phone, password, social, address, cep, city };
     registeredUsers.push(newUser);
-    console.log("Usuários cadastrados (simulado):", registeredUsers); // Para debug
-
+    
     let signupMessage = "Olá PhotoAssistant BR! Novo pré-cadastro realizado pelo site:\n\n";
     signupMessage += `Nome: ${name}\nCPF: ${cpf}\nEmail: ${email}\nTelefone: ${phone}\n`;
     signupMessage += `Rede Social: ${social || 'N/A'}\nEndereço: ${address}, ${cep}, ${city}\n`;
@@ -511,7 +505,7 @@ function handleSignupFormSubmit(event) {
     
     signupActionBtn.textContent = "Cadastro Enviado";
     signupActionBtn.disabled = true; 
-    loginActionBtn.textContent = "Entrar"; // Garante que o botão de login esteja normal
+    loginActionBtn.textContent = "Entrar"; 
     signupModal.style.display = "none"; 
     signupForm.reset();
     alert("Dados de pré-cadastro enviados! A conversa no WhatsApp foi aberta. Envie a mensagem e aguarde o contato da PhotoAssistant BR para os próximos passos e envio dos documentos.");
@@ -522,6 +516,11 @@ function handleLoginFormSubmit(event) {
     const emailCpf = document.getElementById('login-email-cpf').value;
     const password = document.getElementById('login-password').value;
 
+    if (!emailCpf || !password) {
+        alert("Por favor, preencha email/CPF e senha.");
+        return;
+    }
+
     const foundUser = registeredUsers.find(user => (user.email === emailCpf || user.cpf === emailCpf) && user.password === password);
 
     if (foundUser) {
@@ -529,12 +528,17 @@ function handleLoginFormSubmit(event) {
         alert(`Login bem-sucedido! Bem-vindo(a), ${currentUser.name.split(' ')[0]}!`);
         loginModal.style.display = "none";
         loginForm.reset();
-        // Atualiza UI para estado logado
+        
         signupActionBtn.classList.add('hidden');
         loginActionBtn.classList.add('hidden');
         userGreetingEl.textContent = `Olá, ${currentUser.name.split(' ')[0]}`;
         userGreetingEl.classList.remove('hidden');
-        // Poderia adicionar um botão de "Logout" aqui
+        // Aqui você poderia adicionar um botão de Logout se quisesse
+        // const logoutBtn = document.createElement('button');
+        // logoutBtn.textContent = "Sair";
+        // logoutBtn.onclick = () => { /* lógica de logout */ };
+        // document.querySelector('.user-actions').appendChild(logoutBtn);
+
     } else {
         alert("Email/CPF ou senha incorretos, ou cadastro não encontrado.");
     }
@@ -571,8 +575,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Modais
-    signupActionBtn.onclick = () => signupModal.style.display = "block";
-    loginActionBtn.onclick = () => loginModal.style.display = "block";
+    signupActionBtn.onclick = () => {
+        signupModal.style.display = "block";
+        signupForm.reset(); // Limpa o formulário ao abrir
+    }
+    loginActionBtn.onclick = () => {
+        loginModal.style.display = "block";
+        loginForm.reset(); // Limpa o formulário ao abrir
+    }
 
     closeModalBtns.forEach(btn => {
         btn.onclick = () => {
@@ -589,5 +599,3 @@ document.addEventListener('DOMContentLoaded', () => {
     signupForm.addEventListener('submit', handleSignupFormSubmit);
     loginForm.addEventListener('submit', handleLoginFormSubmit);
 });
-
-</script>

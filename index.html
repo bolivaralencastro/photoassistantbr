@@ -86,15 +86,33 @@
                     <div class="form-group"><label for="signup-cpf">CPF:</label><input type="text" id="signup-cpf" required placeholder="000.000.000-00"></div>
                     <div class="form-group"><label for="signup-email">Email:</label><input type="email" id="signup-email" required></div>
                     <div class="form-group"><label for="signup-phone">Telefone (com DDD):</label><input type="tel" id="signup-phone" required placeholder="(00) 00000-0000"></div>
-                    <div class="form-group"><label for="signup-password">Senha:</label><input type="password" id="signup-password" required></div>
-                    <div class="form-group"><label for="signup-confirm-password">Confirmar Senha:</label><input type="password" id="signup-confirm-password" required></div>
+                    <div class="form-group"><label for="signup-password">Senha:</label><input type="password" id="signup-password" autocomplete="new-password" required></div>
+                    <div class="form-group"><label for="signup-confirm-password">Confirmar Senha:</label><input type="password" id="signup-confirm-password" autocomplete="new-password" required></div>
                     <div class="form-group"><label for="signup-social">Rede Social (Link do perfil):</label><input type="text" id="signup-social"></div>
                     <div class="form-group"><label for="signup-address">Endereço Completo:</label><input type="text" id="signup-address" required></div>
                     <div class="form-group"><label for="signup-cep">CEP:</label><input type="text" id="signup-cep" required placeholder="00000-000"></div>
                     <div class="form-group"><label for="signup-city">Cidade/Estado:</label><input type="text" id="signup-city" required></div>
-                    <div class="modal-form-actions"><button type="submit" id="submit-signup-btn">Criar Cadastro</button></div>
+                     <hr style="border-color: var(--border-color-soft); margin: 20px 0;">
+                    <h5>Anexar Documentos (via WhatsApp)</h5>
+                    <p style="font-size: 0.85em; margin-bottom: 15px;">Após clicar em "Criar Cadastro", a conversa no WhatsApp será aberta com seus dados. Por favor, anexe as imagens dos seguintes documentos diretamente na conversa:</p>
+                    <div class="form-group">
+                        <label for="signup-doc-id-placeholder">1. Documento com Foto (RG ou CNH atualizada):</label>
+                        <input type="file" id="signup-doc-id-placeholder" name="signup-doc-id-placeholder" accept="image/*,.pdf" disabled class="file-input-placeholder">
+                        <small style="display:block; font-size:0.8em; color:var(--text-tertiary);">Você anexará este arquivo no WhatsApp.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-doc-residence-placeholder">2. Comprovante de Residência (atualizado):</label>
+                        <input type="file" id="signup-doc-residence-placeholder" name="signup-doc-residence-placeholder" accept="image/*,.pdf" disabled class="file-input-placeholder">
+                        <small style="display:block; font-size:0.8em; color:var(--text-tertiary);">Você anexará este arquivo no WhatsApp.</small>
+                    </div>
+                    <div class="modal-form-actions"><button type="submit">Criar Cadastro e Abrir WhatsApp</button></div>
                 </form>
-                <hr><p class="modal-info-text">Informações sobre documentos e pagamento serão detalhadas após o envio do seu primeiro orçamento.</p>
+                <hr style="border-color: var(--border-color-soft); margin: 25px 0;">
+                <h5>Condições Importantes:</h5>
+                <ul>
+                    <li><strong>1ª Locação:</strong> Reserva mediante pagamento integral antecipado (Pix).</li>
+                    <li><strong>Pedido Mínimo:</strong> R$ 100,00.</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -109,49 +127,13 @@
             <div class="modal-body">
                 <form id="login-form" class="modal-form">
                     <div class="form-group"><label for="login-email-cpf">Email ou CPF:</label><input type="text" id="login-email-cpf" required></div>
-                    <div class="form-group"><label for="login-password">Senha:</label><input type="password" id="login-password" required></div>
+                    <div class="form-group"><label for="login-password">Senha:</label><input type="password" id="login-password" autocomplete="current-password" required></div>
                     <div class="modal-form-actions"><button type="submit">Entrar</button></div>
                 </form>
             </div>
         </div>
     </div>
-
-    <!-- Modal de Informações Gerais (Como Alugar) - Pode ser ativado por um link no futuro -->
-    <div id="general-info-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Como Alugar e Condições</h2>
-                <span class="close-modal-btn" data-modal-id="general-info-modal">×</span>
-            </div>
-            <div class="modal-body" id="general-info-modal-body">
-                <h5>Passos para Locação:</h5>
-                <ul>
-                    <li><strong>1ª Locação:</strong> Reserva mediante pagamento integral antecipado (Pix). Cadastro completo é necessário.</li>
-                    <li><strong>Próximas Locações:</strong> Pix, dinheiro, cartão (+taxa).</li>
-                    <li>Envie sempre o comprovante de pagamento.</li>
-                    <li><strong>Pedido Mínimo:</strong> R$ 100,00.</li>
-                    <li><strong>Horários:</strong> Retirada/Devolução com agendamento prévio (Seg-Sex, 09-19h). Não somos locadora de balcão.</li>
-                    <li>Fora do horário, taxa a partir de R$50.</li>
-                </ul>
-                <h5>Documentos para Cadastro (Solicitados após envio dos dados iniciais):</h5>
-                <ul>
-                    <li>Comprovante de residência (conta de luz, água, etc. - atualizado)</li>
-                    <li>Documento com foto (RG, CNH - atualizado)</li>
-                </ul>
-                <p>Após o cadastro e envio dos documentos, emitiremos o contrato para assinatura digital via GOV.BR.</p>
-                <h5>Dados para Pagamento (Pix):</h5>
-                <p><strong>Nu Pagamentos (NuBank - 260)</strong><br>
-                Agência: 0001, Conta: 8451460-1<br>
-                Titular: Joao Vitor Brinhosa, CPF: 081.144.179-27<br>
-                <strong>Chave Pix (CPF): 08114417927</strong></p>
-                <p><strong>Banco Itaú (341)</strong><br>
-                Agência: 0730, Conta: 39528-2<br>
-                Titular: Joao Vitor Brinhosa, CPF: 081.144.179-27<br>
-                <strong>Chave Pix (Email): joaobrinhosa@hotmail.com</strong></p>
-            </div>
-        </div>
-    </div>
-
+    
     <script src="script.js"></script>
 </body>
 </html>

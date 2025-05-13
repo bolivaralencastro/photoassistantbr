@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #FFFFFF; 
+    --primary-color: #007bff; 
     --secondary-color: #28a745; 
     --accent-color: #ffc107;
     
@@ -94,7 +94,7 @@ body {
 .modal-form input[type="text"],
 .modal-form input[type="email"],
 .modal-form input[type="tel"],
-.modal-form input[type="password"] { /* Adicionado password */
+.modal-form input[type="password"] {
     width: 100%; padding: 10px; background-color: var(--element-background);
     border: 1px solid var(--border-color-soft); border-radius: 4px;
     box-sizing: border-box; margin-bottom: 5px; color: var(--text-primary); font-size: 0.9em;
@@ -186,7 +186,7 @@ body {
 
 .budget-player-bar {
     background-color: transparent; height: 90px; flex-shrink: 0; 
-  
+    border-top: 1px solid var(--border-color-separator); 
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 25px; color: var(--text-primary);
 }
@@ -220,7 +220,7 @@ body {
     background-color: var(--panel-background); color: var(--text-secondary);
     margin: 5vh auto; padding: 25px; border: 1px solid var(--border-color-soft); 
     width: 90%; max-width: 650px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    max-height: 90vh; overflow-y: auto; /* Scroll para modal longo */
+    max-height: 90vh; overflow-y: auto; 
 }
 .modal-header {
     display: flex; justify-content: space-between; align-items: center;
@@ -250,6 +250,10 @@ body {
     cursor: pointer; font-weight: bold; font-size: 0.95em;
 }
 .modal-form-actions button:hover { background-color: var(--button-hover-color); }
+.file-input-placeholder {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 
 @media (max-width: 992px) { 
     .filters-sidebar { display: none; }
@@ -263,16 +267,13 @@ body {
     .top-bar { height: 60px; padding: 0 15px; }
     .top-bar .search-area { display: none; } 
     .top-bar .user-actions { display: none; } 
-    .main-layout { padding: 15px; height: calc(100% - 60px - 90px); /* Ajuste para altura total menos top e bottom bars */ }
+    .main-layout { padding: 15px; height: calc(100% - 60px - 90px); }
     .equipment-main-content { padding: 15px; }
     .budget-player-bar { flex-direction: column; height: auto; min-height:90px; padding: 10px; gap: 10px; }
     .budget-items-preview { width: 100%; justify-content: flex-start; }
     .budget-actions { width: 100%; justify-content: space-between; margin-left: 0; }
-    /* .app-wrapper { padding-bottom: 120px; height: calc(100vh - 120px); }  Removido, pois main-layout controla o scroll */
     .modal-content { width: 95%; margin: 5vh auto; padding: 20px; }
     .modal-header h2 { font-size: 1.3em; }
     .equipment-card { width: 170px; } 
     .equipment-card img { height: 100px; }
 }
-
-</style>
