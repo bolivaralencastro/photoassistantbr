@@ -582,11 +582,11 @@ document.addEventListener('DOMContentLoaded', () => {
     closeModalBtns.forEach(btn => {
         btn.onclick = () => {
             const modalId = btn.dataset.modalId;
-            if(document.getElementById(modalId)) { // Verifica se o modal existe
+            if(document.getElementById(modalId)) { 
                  document.getElementById(modalId).style.display = "none";
             }
         }
-    }); // Fechamento correto do forEach
+    }); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FECHAMENTO CORRETO DO forEach ADICIONADO
 
     window.onclick = (event) => {
         if (event.target.classList.contains('modal')) {
@@ -596,4 +596,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     signupForm.addEventListener('submit', handleSignupFormSubmit);
     loginForm.addEventListener('submit', handleLoginFormSubmit);
-}); // <<<<<<< ESTE É O FECHAMENTO CORRETO DO DOMContentLoaded
+
+}); // Este é o fechamento do DOMContentLoaded
