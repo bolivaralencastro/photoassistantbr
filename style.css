@@ -186,7 +186,6 @@ body {
 
 .budget-player-bar {
     background-color: transparent; height: 90px; flex-shrink: 0; 
-    border-top: 1px solid var(--border-color-separator); 
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 25px; color: var(--text-primary);
 }
