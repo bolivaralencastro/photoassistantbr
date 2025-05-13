@@ -533,11 +533,6 @@ function handleLoginFormSubmit(event) {
         loginActionBtn.classList.add('hidden');
         userGreetingEl.textContent = `Olá, ${currentUser.name.split(' ')[0]}`;
         userGreetingEl.classList.remove('hidden');
-        // Aqui você poderia adicionar um botão de Logout se quisesse
-        // const logoutBtn = document.createElement('button');
-        // logoutBtn.textContent = "Sair";
-        // logoutBtn.onclick = () => { /* lógica de logout */ };
-        // document.querySelector('.user-actions').appendChild(logoutBtn);
 
     } else {
         alert("Email/CPF ou senha incorretos, ou cadastro não encontrado.");
@@ -577,19 +572,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Modais
     signupActionBtn.onclick = () => {
         signupModal.style.display = "block";
-        signupForm.reset(); // Limpa o formulário ao abrir
+        signupForm.reset(); 
     }
     loginActionBtn.onclick = () => {
         loginModal.style.display = "block";
-        loginForm.reset(); // Limpa o formulário ao abrir
+        loginForm.reset(); 
     }
 
     closeModalBtns.forEach(btn => {
         btn.onclick = () => {
             const modalId = btn.dataset.modalId;
-            document.getElementById(modalId).style.display = "none";
+            if(document.getElementById(modalId)) { // Verifica se o modal existe
+                 document.getElementById(modalId).style.display = "none";
+            }
         }
-    
+    }); // Fechamento correto do forEach
+
     window.onclick = (event) => {
         if (event.target.classList.contains('modal')) {
             event.target.style.display = "none";
@@ -598,4 +596,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
     signupForm.addEventListener('submit', handleSignupFormSubmit);
     loginForm.addEventListener('submit', handleLoginFormSubmit);
-});
+}); // <<<<<<< ESTE É O FECHAMENTO CORRETO DO DOMContentLoaded
