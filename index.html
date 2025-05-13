@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoAssistant BR - Aluguel de Equipamentos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <div class="top-bar">
+            <div class="logo-area">PHOTOASSISTANT<span class="logo-br">BR</span></div>
+            <div class="search-area">
+                <input type="text" id="global-search-bar" placeholder="Buscar equipamentos...">
+            </div>
+            <div class="user-actions">
+                <button class="signup-btn" id="signup-action-btn">Cadastre-se</button>
+                <button id="login-action-btn">Entrar</button>
+                <span id="user-greeting" class="hidden"></span>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <aside class="filters-sidebar">
+                <h2>Filtros</h2>
+                <div class="filter-group">
+                    <h3>Período de Interesse</h3>
+                    <div class="date-filter-inputs">
+                        <input type="date" id="date-start" title="Data de Início">
+                        <input type="date" id="date-end" title="Data de Fim">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h3>Disponibilidade Geral</h3>
+                    <label><input type="checkbox" id="availability-filter"> Mostrar apenas disponíveis (geral)</label>
+                </div>
+                <div class="filter-group">
+                    <h3>Marca</h3>
+                    <div id="brand-filters"></div>
+                </div>
+                <div class="filter-group">
+                    <h3>Tipo de Equipamento</h3>
+                    <div id="type-filters"></div>
+                </div>
+                <div class="filter-group">
+                    <h3>Preço (R$)</h3>
+                    <div class="price-filter-inputs">
+                        <input type="number" id="min-price" placeholder="Min">
+                        <input type="number" id="max-price" placeholder="Max">
+                    </div>
+                </div>
+                <button id="clear-filters-btn">Limpar Filtros</button>
+            </aside>
+
+            <main class="equipment-main-content">
+                <div id="results-count"></div>
+                <div id="date-availability-notice" class="hidden"></div>
+                <div id="equipment-list-sections">
+                    <!-- Seções serão populadas aqui -->
+                </div>
+            </main>
+        </div>
+
+        <div class="budget-player-bar">
+            <div class="budget-items-preview" id="selected-budget-items-preview">
+                <span id="empty-budget-bar-message">Nenhum item selecionado</span>
+            </div>
+            <div class="budget-actions">
+                <span id="budget-total-price">Total: R$0</span>
+                <button id="send-whatsapp-bottom-btn" disabled>Enviar Orçamento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Cadastro -->
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Cadastre-se</h2>
+                <span class="close-modal-btn" data-modal-id="signup-modal">×</span>
+            </div>
+            <div class="modal-body">
+                <p>Preencha para iniciar seu cadastro. Após o envio dos dados, entraremos em contato para solicitar os documentos.</p>
+                <form id="signup-form" class="modal-form">
+                    <div class="form-group"><label for="signup-name">Nome Completo:</label><input type="text" id="signup-name" required></div>
+                    <div class="form-group"><label for="signup-cpf">CPF:</label><input type="text" id="signup-cpf" required placeholder="000.000.000-00"></div>
+                    <div class="form-group"><label for="signup-email">Email:</label><input type="email" id="signup-email" required></div>
+                    <div class="form-group"><label for="signup-phone">Telefone (com DDD):</label><input type="tel" id="signup-phone" required placeholder="(00) 00000-0000"></div>
+                    <div class="form-group"><label for="signup-password">Senha:</label><input type="password" id="signup-password" required></div>
+                    <div class="form-group"><label for="signup-confirm-password">Confirmar Senha:</label><input type="password" id="signup-confirm-password" required></div>
+                    <div class="form-group"><label for="signup-social">Rede Social (Link do perfil):</label><input type="text" id="signup-social"></div>
+                    <div class="form-group"><label for="signup-address">Endereço Completo:</label><input type="text" id="signup-address" required></div>
+                    <div class="form-group"><label for="signup-cep">CEP:</label><input type="text" id="signup-cep" required placeholder="00000-000"></div>
+                    <div class="form-group"><label for="signup-city">Cidade/Estado:</label><input type="text" id="signup-city" required></div>
+                    <div class="modal-form-actions"><button type="submit" id="submit-signup-btn">Criar Cadastro</button></div>
+                </form>
+                <hr><p class="modal-info-text">Informações sobre documentos e pagamento serão detalhadas após o envio do seu primeiro orçamento.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Entrar</h2>
+                <span class="close-modal-btn" data-modal-id="login-modal">×</span>
+            </div>
+            <div class="modal-body">
+                <form id="login-form" class="modal-form">
+                    <div class="form-group"><label for="login-email-cpf">Email ou CPF:</label><input type="text" id="login-email-cpf" required></div>
+                    <div class="form-group"><label for="login-password">Senha:</label><input type="password" id="login-password" required></div>
+                    <div class="modal-form-actions"><button type="submit">Entrar</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Informações Gerais (Como Alugar) - Pode ser ativado por um link no futuro -->
+    <div id="general-info-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Como Alugar e Condições</h2>
+                <span class="close-modal-btn" data-modal-id="general-info-modal">×</span>
+            </div>
+            <div class="modal-body" id="general-info-modal-body">
+                <h5>Passos para Locação:</h5>
+                <ul>
+                    <li><strong>1ª Locação:</strong> Reserva mediante pagamento integral antecipado (Pix). Cadastro completo é necessário.</li>
+                    <li><strong>Próximas Locações:</strong> Pix, dinheiro, cartão (+taxa).</li>
+                    <li>Envie sempre o comprovante de pagamento.</li>
+                    <li><strong>Pedido Mínimo:</strong> R$ 100,00.</li>
+                    <li><strong>Horários:</strong> Retirada/Devolução com agendamento prévio (Seg-Sex, 09-19h). Não somos locadora de balcão.</li>
+                    <li>Fora do horário, taxa a partir de R$50.</li>
+                </ul>
+                <h5>Documentos para Cadastro (Solicitados após envio dos dados iniciais):</h5>
+                <ul>
+                    <li>Comprovante de residência (conta de luz, água, etc. - atualizado)</li>
+                    <li>Documento com foto (RG, CNH - atualizado)</li>
+                </ul>
+                <p>Após o cadastro e envio dos documentos, emitiremos o contrato para assinatura digital via GOV.BR.</p>
+                <h5>Dados para Pagamento (Pix):</h5>
+                <p><strong>Nu Pagamentos (NuBank - 260)</strong><br>
+                Agência: 0001, Conta: 8451460-1<br>
+                Titular: Joao Vitor Brinhosa, CPF: 081.144.179-27<br>
+                <strong>Chave Pix (CPF): 08114417927</strong></p>
+                <p><strong>Banco Itaú (341)</strong><br>
+                Agência: 0730, Conta: 39528-2<br>
+                Titular: Joao Vitor Brinhosa, CPF: 081.144.179-27<br>
+                <strong>Chave Pix (Email): joaobrinhosa@hotmail.com</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
